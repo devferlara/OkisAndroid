@@ -27,7 +27,8 @@
         <activity android:name=".registro" />
         <activity android:name=".ingreso" />
         <activity android:name=".seleccionar_categorias" />
-        <activity android:name=".Dentro"></activity>
+        <activity android:name=".Dentro" />
+        <activity android:name=".aquienseguir"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.i24web.okisandroid;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,6 +55,8 @@ public class ingreso extends AppCompatActivity {
         setContentView(R.layout.activity_ingreso);
 
         ButterKnife.bind(this);
+
+
 
         AppHelper.init(getApplicationContext());
         findCurrent();
@@ -130,6 +133,10 @@ public class ingreso extends AppCompatActivity {
             if(dialog != null){
                 dialog.dismiss();
             }
+            SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("estado","logueado");
+            editor.apply();
             AppHelper.setCurrSession(cognitoUserSession);
             AppHelper.newDevice(device);
             startActivity(new Intent(ingreso.this, Dentro.class));

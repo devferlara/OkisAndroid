@@ -1,6 +1,7 @@
 package com.i24web.okisandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +35,12 @@ public class Inicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
+
+        SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+        if(settings.getString("estado", "none").toString().equals("logueado")){
+            startActivity(new Intent(Inicio.this, ingreso.class));
+            finish();
+        }
 
         ButterKnife.bind(this);
 

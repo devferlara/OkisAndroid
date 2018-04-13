@@ -3,6 +3,7 @@ package com.i24web.okisandroid;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,6 +79,10 @@ public class Dentro extends AppCompatActivity {
 
     private void exit () {
         Intent intent = new Intent(Dentro.this, Inicio.class);
+        SharedPreferences settings = getSharedPreferences("UserInfo", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("estado","none");
+        editor.apply();
         if(username == null)
             username = "";
         intent.putExtra("name",username);
@@ -124,6 +129,8 @@ public class Dentro extends AppCompatActivity {
     }
 
     private void showUserDetail(final String attributeType, final String attributeValue) {
+
+        /*
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(attributeType);
         final EditText input = new EditText(Dentro.this);
@@ -143,7 +150,7 @@ public class Dentro extends AppCompatActivity {
                 try {
                     String newValue = input.getText().toString();
                     if(!newValue.equals(attributeValue)) {
-                        showWaitDialog("Updating...");
+                        showWaitDialog("Actualizando...");
                         updateAttribute(AppHelper.getSignUpFieldsC2O().get(attributeType), newValue);
                     }
                     userDialog.dismiss();
@@ -154,6 +161,8 @@ public class Dentro extends AppCompatActivity {
         });
         userDialog = builder.create();
         userDialog.show();
+        */
+
     }
 
     UpdateAttributesHandler updateHandler = new UpdateAttributesHandler() {
@@ -161,7 +170,7 @@ public class Dentro extends AppCompatActivity {
         public void onSuccess(List<CognitoUserCodeDeliveryDetails> attributesVerificationList) {
             // Update successful
             if(attributesVerificationList.size() > 0) {
-                showDialogMessage("Updated", "The updated attributes has to be verified",  false);
+                showDialogMessage("Actualizado", "Atributo verificado",  false);
             }
             getDetails();
         }
@@ -170,7 +179,7 @@ public class Dentro extends AppCompatActivity {
         public void onFailure(Exception exception) {
             // Update failed
             closeWaitDialog();
-            showDialogMessage("Update failed", AppHelper.formatException(exception), false);
+            showDialogMessage("Error al actualizar", AppHelper.formatException(exception), false);
         }
     };
 
@@ -182,7 +191,7 @@ public class Dentro extends AppCompatActivity {
         CognitoUserAttributes updatedUserAttributes = new CognitoUserAttributes();
         updatedUserAttributes.addAttribute(attributeType, attributeValue);
         Toast.makeText(getApplicationContext(), attributeType + ": " + attributeValue, Toast.LENGTH_LONG);
-        showWaitDialog("Updating...");
+        showWaitDialog("Actualizando...");
         AppHelper.getPool().getUser(AppHelper.getCurrUser()).updateAttributesInBackground(updatedUserAttributes, updateHandler);
     }
 
