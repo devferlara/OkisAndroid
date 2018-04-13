@@ -8,4 +8,6 @@
     <color name="colorGrisOscuro">#999999</color>
     <color name="colorGrisClaro">#d1d1d1</color>
 
+    <color name="colorRojo">#F00</color>
+
 </resources>

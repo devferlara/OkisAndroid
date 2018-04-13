@@ -18,4 +18,26 @@
 
     <string name="facebook_app_id">128624887823163</string>
 
+    <string name="informacion">Información</string>
+    <string name="error">Error</string>
+    <string name="hemos_obtenido_tus_datos">Hemos obtenido tus datos</string>
+    <string name="no_hemos_obtenido_tus_datos">Hubo un error al tratar de obtener tus datos</string>
+
+    <string name="completa_password">La contraseña debe tener al menos 8 dígitos</string>
+    <string name="completa_nombre">Ingresa tus nombres</string>
+    <string name="completa_apellido">Ingresa tus apellidos</string>
+    <string name="validar_email">Ingresa un email válido</string>
+
+    <string name="no_se_pudo_crear_cuenta">No hemos podido crear una cuenta con este correo electrónico.</string>
+    <string name="cuenta_creada_correctamente">Te haz registrado correctamente</string>
+
+    <string name="ingresa_codigo_confirmacion">Ingresa el código de confirmación</string>
+    <string name="usuario_confirmado">Codigo de confirmación aceptado</string>
+    <string name="usuario_no_confirmado">Código de confirmación no válido</string>
+    <string name="reenviar_codigo">Reenviar código de confirmación</string>
+
+    <string name="cognito_pool_id">us-east-1_qwGIgZvnh</string>
+    <string name="cognito_client_id">1b5b2991pldd2d9260g0hdggqa</string>
+    <string name="cognito_secret">1ghj7ldsa8odpmuf3oc7n0qsftfegbhiol0a4oih4inaamd4jkd1</string>
+
 </resources>
