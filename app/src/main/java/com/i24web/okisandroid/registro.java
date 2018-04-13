@@ -53,6 +53,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.i24web.okisandroid.Utils.Helpers;
 import com.i24web.okisandroid.Utils.showAlerter;
 import com.tapadoo.alerter.Alerter;
 
@@ -187,7 +188,7 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
 
                 if (nombres.getText().toString().length() > 2) {
                     if (apellidos.getText().toString().length() > 2) {
-                        if (checkEmail(email.getText().toString())) {
+                        if (Helpers.checkEmail(email.getText().toString())) {
                             if (password.getText().toString().length() > 7) {
 
                                 closeKeyboard();
@@ -437,6 +438,7 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
                                                         Log.d("Estado", "Success");
                                                         dialog.dismiss();
                                                         startActivity(new Intent(registro.this, seleccionar_categorias.class));
+                                                        finish();
                                                     }
 
                                                     @Override
@@ -460,6 +462,7 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
                                                     public void onFailure(Exception exception) {
                                                         Log.d("Estado", exception.toString());
                                                     }
+
                                                 };
 
                                                 usuario_registrado.getSessionInBackground(authenticationHandler);
@@ -592,20 +595,6 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
                 .addApi(Auth.GOOGLE_SIGN_IN_API, options)
                 .build();
         mGoogleApiClient.connect();
-    }
-
-    public static final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                    "\\@" +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                    "(" +
-                    "\\." +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                    ")+"
-    );
-
-    private boolean checkEmail(String email) {
-        return EMAIL_ADDRESS_PATTERN.matcher(email).matches();
     }
 
     @Override

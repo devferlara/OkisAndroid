@@ -12,7 +12,7 @@
     <string name="ya_tengo_cuenta">Ya tengo cuenta</string>
     <string name="nombres">Nombres</string>
     <string name="apellidos">Apellidos</string>
-    <string name="email">Correo electrónico o número de celular</string>
+    <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="registrarme">Registrarme</string>
 
@@ -27,6 +27,7 @@
     <string name="completa_nombre">Ingresa tus nombres</string>
     <string name="completa_apellido">Ingresa tus apellidos</string>
     <string name="validar_email">Ingresa un email válido</string>
+    <string name="password_no_coincide">La contraseña no coincide</string>
 
     <string name="no_se_pudo_crear_cuenta">No hemos podido crear una cuenta con este correo electrónico.</string>
     <string name="cuenta_creada_correctamente">Te haz registrado correctamente</string>

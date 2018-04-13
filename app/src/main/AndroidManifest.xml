@@ -26,7 +26,8 @@
         </activity>
         <activity android:name=".registro" />
         <activity android:name=".ingreso" />
-        <activity android:name=".seleccionar_categorias"></activity>
+        <activity android:name=".seleccionar_categorias" />
+        <activity android:name=".Dentro"></activity>
     </application>
 
 </manifest>
