@@ -35,9 +35,17 @@
     <string name="usuario_confirmado">Codigo de confirmación aceptado</string>
     <string name="usuario_no_confirmado">Código de confirmación no válido</string>
     <string name="reenviar_codigo">Reenviar código de confirmación</string>
+    <string name="codigo_reenviado">Hemos enviado el código de confirmación nuevamente</string>
+    <string name="problema_al_reenviar_codigo">No hemos podido reenviar el código</string>
 
     <string name="cognito_pool_id">us-east-1_qwGIgZvnh</string>
     <string name="cognito_client_id">1b5b2991pldd2d9260g0hdggqa</string>
     <string name="cognito_secret">1ghj7ldsa8odpmuf3oc7n0qsftfegbhiol0a4oih4inaamd4jkd1</string>
+
+    <string name="reenviar_codigo_pregunta">¿Tienes un problema con el código?.</string>
+    <string name="reenviar_boton">Reenviar</string>
+    <string name="cancelar">Cancelar</string>
+
+    <string name="continuar">Continuar</string>
 
 </resources>

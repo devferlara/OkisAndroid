@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserAttributes;
@@ -32,6 +34,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.Mult
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.AuthenticationHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.VerificationHandler;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -97,6 +100,8 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
     EditText n5;
     @BindView(R.id.n6)
     EditText n6;
+    @BindView(R.id.reenviar)
+    Button reenviar;
 
     CallbackManager mCallbackManager;
     GoogleApiClient mGoogleApiClient;
@@ -210,51 +215,13 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
                                         email.setVisibility(View.GONE);
                                         password.setVisibility(View.GONE);
                                         ingresar.setVisibility(View.GONE);
+                                        loginButton.setVisibility(View.GONE);
+                                        gmail.setVisibility(View.GONE);
 
                                         cd.setVisibility(View.VISIBLE);
                                         linearLayout.setVisibility(View.VISIBLE);
+                                        reenviar.setVisibility(View.VISIBLE);
                                         usuario_registrado = user;
-                                        /*
-                                        // Autenticacion
-                                        AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
-
-                                            @Override
-                                            public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
-                                                Log.d("Estado", "Success");
-                                                final ProgressDialog dialog = ProgressDialog.show(registro.this, "",
-                                                        "Autenticando usuario", true);
-
-                                                Intent intent = new Intent(registro.this, confirmacion.class);
-                                                startActivity(intent);
-
-                                            }
-
-                                            @Override
-                                            public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
-                                                AuthenticationDetails authenticationDetails = new AuthenticationDetails(userId, password.getText().toString(), null);
-                                                authenticationContinuation.setAuthenticationDetails(authenticationDetails);
-                                                authenticationContinuation.continueTask();
-                                            }
-
-                                            @Override
-                                            public void getMFACode(MultiFactorAuthenticationContinuation continuation) {
-                                                Log.d("Estado", "getMFACode");
-                                            }
-
-                                            @Override
-                                            public void authenticationChallenge(ChallengeContinuation continuation) {
-                                                Log.d("Estado", "authenticationChallenge");
-                                            }
-
-                                            @Override
-                                            public void onFailure(Exception exception) {
-                                                Log.d("Estado", exception.toString());
-                                            }
-                                        };
-
-                                        user.getSessionInBackground(authenticationHandler);
-                                        // Autenticacion
-                                        */
 
                                     }
 
@@ -452,12 +419,52 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
                                     if (n6.getText().toString().length() > 0) {
                                         final ProgressDialog dialog = ProgressDialog.show(registro.this, "",
                                                 "Validando código", true);
+                                        closeKeyboard();
                                         String codigo_confirmacion = n1.getText().toString() + n2.getText().toString() + n3.getText().toString() + n4.getText().toString() + n5.getText().toString() + n6.getText().toString();
                                         usuario_registrado.confirmSignUpInBackground(codigo_confirmacion, false, new GenericHandler() {
                                             @Override
                                             public void onSuccess() {
                                                 showAlerter.show(registro.this, getString(R.string.informacion), getString(R.string.usuario_confirmado), R.color.colorPrimary);
                                                 dialog.dismiss();
+                                                final ProgressDialog dialog = ProgressDialog.show(registro.this, "",
+                                                        "Autenticando usuario", true);
+
+                                                // Autenticacion
+                                                AuthenticationHandler authenticationHandler = new AuthenticationHandler() {
+
+                                                    @Override
+                                                    public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
+                                                        Log.d("Estado", "Success");
+                                                        dialog.dismiss();
+                                                        startActivity(new Intent(registro.this, seleccionar_categorias.class));
+                                                    }
+
+                                                    @Override
+                                                    public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
+                                                        AuthenticationDetails authenticationDetails = new AuthenticationDetails(userId, password.getText().toString(), null);
+                                                        authenticationContinuation.setAuthenticationDetails(authenticationDetails);
+                                                        authenticationContinuation.continueTask();
+                                                    }
+
+                                                    @Override
+                                                    public void getMFACode(MultiFactorAuthenticationContinuation continuation) {
+                                                        Log.d("Estado", "getMFACode");
+                                                    }
+
+                                                    @Override
+                                                    public void authenticationChallenge(ChallengeContinuation continuation) {
+                                                        Log.d("Estado", "authenticationChallenge");
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Exception exception) {
+                                                        Log.d("Estado", exception.toString());
+                                                    }
+                                                };
+
+                                                usuario_registrado.getSessionInBackground(authenticationHandler);
+                                                // Autenticacion
+
                                             }
 
                                             @Override
@@ -494,6 +501,44 @@ public class registro extends AppCompatActivity implements GoogleApiClient.Conne
             }
         });
         // Sección de confirmación
+
+        //Seccion reenviar código de confirmación
+        reenviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new MaterialDialog.Builder(registro.this)
+                        .title(R.string.informacion)
+                        .content(R.string.reenviar_codigo_pregunta)
+                        .positiveText(R.string.reenviar_boton)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                usuario_registrado.resendConfirmationCodeInBackground(new VerificationHandler() {
+                                    @Override
+                                    public void onSuccess(CognitoUserCodeDeliveryDetails verificationCodeDeliveryMedium) {
+                                        showAlerter.show(registro.this, getString(R.string.informacion), getString(R.string.codigo_reenviado), R.color.colorPrimary);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Exception exception) {
+                                        showAlerter.show(registro.this, getString(R.string.informacion), getString(R.string.problema_al_reenviar_codigo), R.color.colorRojo);
+                                    }
+                                });
+                            }
+                        })
+                        .negativeText(R.string.cancelar)
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                            }
+                        })
+                        .show();
+
+            }
+        });
+        //Seccion reenviar código de confirmación
 
 
     }

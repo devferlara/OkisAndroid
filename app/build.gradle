@@ -32,6 +32,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.27.0'
     implementation 'com.google.android.gms:play-services-auth:11.8.0'
     implementation 'com.tapadoo.android:alerter:2.0.4'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
     //AWS
     implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
